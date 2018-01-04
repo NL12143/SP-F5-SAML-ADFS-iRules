@@ -1,8 +1,10 @@
 https://f5.com/products/big-ip#Software 
 
+BIG-IP = LTM, AAM, APM, ASM, AFM 
+
 LTM Local Traffic Manager > NLB 
-APM Access Policy Manager > Access control, SAML, MFA
 AAM Application Acceleration Manager > Reverse proxy, caching 
+APM Access Policy Manager > Access control, SAML, MFA
 ASM Application Security Manager > Offload SSL
 AFM Advanced Firewall Manager > Threats, DDoS
 
