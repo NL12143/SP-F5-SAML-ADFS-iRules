@@ -1,0 +1,25 @@
+https://f5.com/products/big-ip#Software 
+
+LTM Local Traffic Manager > NLB 
+APM Access Policy Manager > Access control, SAML, MFA
+AAM Application Acceleration Manager > Reverse proxy, caching 
+ASM Application Security Manager > Offload SSL
+AFM Advanced Firewall Manager > Threats, DDoS
+
+
+## The BIG-IP platform runs the network. What runs the BIG-IP platform?
+
+Underlying all BIG-IP hardware and software is F5’s proprietary operating system, TMOS, which provides unified intelligence, flexibility, and programmability.
+With its application control plane architecture, TMOS gives you control over the acceleration, security, and availability services your applications require.
+TMOS establishes a virtual, unified pool of highly scalable, resilient, and reusable services that can dynamically adapt to the changing conditions in data centers and virtual and cloud infrastructures.
+
+
+## Take advantage of TMOS’s open API.
+
+F5 products built on TMOS offer flexibility via an open API.
+
+Applications can cue TMOS-based devices to control traffic flow and maximize performance using the iControl API.
+You gain granular control over traffic going through F5 devices using **iRules**, F5’s scripting language.
+**iApps** templates let you deploy and manage network services for specific applications.
+
+
