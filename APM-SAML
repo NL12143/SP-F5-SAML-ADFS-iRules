@@ -4,14 +4,15 @@ https://devcentral.f5.com/questions/apm-as-a-saml-sp-and-integration-of-saml-wit
 
 I am investigating a scenario where a Sharepoint site is protected by a APM using SAML-authentication and where the claims should also be sent into the Sharepoint site. Now, I came up with the following flow;
 
-Client contacts https://sharepoint.example.com/ which is a VIP with SAML SP access service
-sharepoint.example.com's SAML SP Redirects client to f.ex. https://idp.contoso.com/'s SAML IDP URL
-Client logs in at idp.contoso.com and is accepted and subsequently redirected to https://sharepoint.example.com/'s SAML SP return-URL with a SAML Token
-sharepoint.example.com's SAML SP processes the SAML token and grants access (sets sessioncookies etc.), but, and here's the problem, it should redirect the client to an ADFS 2.0 server's SP with a new SAML-token which is issued by a IdP on the APM. (IdP proxy?)
-Client now contacts https://adfs.example.com/'s SAML SP with the SAML token issued by the F5 APM IdP.
-ADFS consumes the SAML 2.0 token from the APM IdP and issues a new SAML 1.1 token which the Sharepoint-installation can consume. ADFS now redirects again to https://sharepoint.example.com/'s sharepoint trust-site (/_trust/).
-Client now contacts https://sharepoint.example.com/_trust/ with both a F5 session cookie and a SAML token issued by the ADFS (which is trusted by Sharepoint).
-Client is granted access to the sharepoint-site.
+1. Client contacts https://sharepoint.example.com/ which is a VIP with SAML SP access service
+2. Sharepoint SAML SP Redirects client to f.ex. https://idp.contoso.com/'s SAML IDP URL
+3. Client logs in at idp.contoso.com and is accepted and subsequently redirected to https://sharepoint.example.com/'s SAML SP return-URL with a SAML Token
+4. Sharepoint SAML SP processes the SAML token and grants access (sets sessioncookies etc.), but, and here's the problem, it should redirect the client to an ADFS 2.0 server's SP with a new SAML-token which is issued by a IdP on the APM. (IdP proxy?)
+5. Client now contacts https://adfs.example.com/'s SAML SP with the SAML token issued by the F5 APM IdP.
+6. ADFS consumes the SAML 2.0 token from the APM IdP and issues a new SAML 1.1 token which the Sharepoint-installation can consume. ADFS now redirects again to https://sharepoint.example.com/'s sharepoint trust-site (/_trust/).
+7. Client now contacts https://sharepoint.example.com/_trust/ with both a F5 session cookie and a SAML token issued by the ADFS (which is trusted by Sharepoint).
+8. Client is granted access to the sharepoint-site.
+
 Sharepoint 2010/2013 only supports SAML 1.1, and APM runs SAML 2.0, so I'll need a "conversion" done by f.ex. ADFS 2.0 which should (!?) be able to talk to both F5 APM (unsure, I haven't tested fully yet) and Sharepoint (this I know for sure).
 
 I have tested point 1-4, but not been able to make the APM redirect again with a new SAML IdP token, it will only redirect (relay state in the SP config) a "normal" connection.
