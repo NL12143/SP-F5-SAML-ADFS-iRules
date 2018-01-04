@@ -1,6 +1,6 @@
 https://devcentral.f5.com/questions/apm-as-a-saml-sp-and-integration-of-saml-with-sharepoint
 
-## APM as a SAML SP and integration of SAML with Sharepoint 
+## APM as a SAML SP (Service Provider) and integration of SAML with Sharepoint 
 
 I am investigating a scenario where a Sharepoint site is protected by a APM using SAML-authentication and where the claims should also be sent into the Sharepoint site. Now, I came up with the following flow;
 
