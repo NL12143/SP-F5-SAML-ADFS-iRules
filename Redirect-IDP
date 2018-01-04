@@ -1,0 +1,49 @@
+When publishing SharePoint via F5. 
+In case your security policy soes not allow for a first anonymous request to SharePoint.   
+You must add an iRule that simulates the SharePoint response when user is stil unauthenticated. 
+It will redirect user to an federation provider (FP), and from there to his identity provider (IP). 
+
+Request= https://extranet.contoso.com 
+
+Response=  
+
+
+
+
+
+
+For this one can use following iRule. 
+
+when HTTP_REQUEST {
+                set host [HTTP::host]
+                set URL "https://$host"
+                set wa "wa=wsignin1.0"
+                set wtrealm "wtrealm=urn:$host"
+                set wctx "wctx=[URI::encode $URL[HTTP::uri]]"
+                set whr "whr=https://adfs.contoso.be/idp"
+                set wreply "wreply=[URI::encode $URL/_trust/]"
+                set adfs "https://adfs.contoso.be/adfs/ls/"
+                set logout "https://adfs.contoso.be/LogOut"
+
+                set trust [URI::query [HTTP::uri] trust]
+                if { $trust != "" } {
+                  set trust "trust=$trust" 
+                } 
+                else {
+                  set trust "trust=default"
+                }
+
+                #when user get the website we redirect him to the ADFS if the session doesn't exist already
+                if { [ HTTP::method] eq "GET" && not[ACCESS::session exists [ACCESS::session sid]]}{
+                                set adfs_redirect "$adfs?$trust&$wa&$wtrealm&$wctx&$whr&$wreply"
+                                #Redirect
+                                log local0. "Redirect: $adfs_redirect"
+                                HTTP::redirect $adfs_redirect
+                }
+
+    #when the user logs out we clear the session and redirect him to a specific logout page
+    if { [HTTP::uri] contains "/sessioncleared"}{
+        ACCESS::session remove
+        HTTP::respond 302 noserver Location $logout Connection close Set-Cookie "MRHSession=;secure;path=/;expires=Thu, 01 Jan 1970 00:00:00 GMT" Set-Cookie "LastMRH_Session=;secure;path=/;expires=Thu, 01 Jan 1970 00:00:00 GMT"
+    }
+}
