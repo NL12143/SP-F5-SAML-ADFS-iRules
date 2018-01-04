@@ -1,0 +1,21 @@
+
+Deploying F5 with Microsoft SharePoint 2010
+https://www.f5.com/pdf/deployment-guides/f5-sharepoint-2010-dg.pdf 
+
+Deploying F5 with Microsoft SharePoint 2013 and 2010
+https://www.f5.com/pdf/deployment-guides/iapp-sharepoint-2010-2013-dg.pdf
+
+Microsoft SharePoint 2010 and 2013 (BIG-IP v11.4 - v13: LTM, APM, ASM, AFM, AAM) 
+https://f5.com/solutions/deployment-guides/microsoft-sharepoint-2010-and-2013-new-supported-iapp-big-ip-v114-ltm-apm-asm-aam
+
+Microsoft SharePoint 2016 (BIG-IP v11.4 - v13: LTM, APM, ASM, AFM, AAM) 
+This F5 deployment guide contains instructions on configuring the BIG-IP system version 11.4 and later for Microsoft SharePoint 2016 implementations, resulting in a secure, fast, and available deployment.   The guide includes...
+https://f5.com/solutions/deployment-guides/microsoft-sharepoint-2016-big-ip-v114-v12-ltm-apm-asm-afm-aam 
+
+Microsoft Office 365 SAML IdP (BIG-IP v11, v12, v13: APM) 
+This document contains guidance on configuring the BIG-IP Access Policy Manager (APM) as a SAML 2.0 Identify Provider (IdP) for Office 365 to perform Single Sign-On between the local Active Directory user accounts and Office 365-based resources...
+https://f5.com/solutions/deployment-guides/microsoft-office-365-saml-idp-big-ip-v11-apm
+
+Microsoft Office Web Apps Server (BIG-IP v11, v12: LTM, APM, AAM)  
+This F5 deployment guide shows how to configure the BIG-IP Local Traffic Manager (LTM) and Access Policy Manager (APM) for high availability and optimization of Microsoft Office Web Apps Server 2013...
+https://f5.com/solutions/deployment-guides/microsoft-office-web-apps-server-big-ip-v11-ltm
