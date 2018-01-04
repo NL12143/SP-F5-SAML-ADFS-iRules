@@ -23,19 +23,26 @@ This is a "work in progress" and I am open for any suggestions how this could be
 ### Updated 22-Oct-2013•Originally posted on 22-Oct-2013 by Kevin Stewart ​F5
 Technically speaking, because SharePoint only understands WIF, its STS must be ADFS. So the traffic looks more like this:
 
-Client contacts a claims-aware SharePoint site and is redirected to its STS (ADFS or ADFS proxy).
-ADFS redirects the client to its STS, the APM IdP.
-Client contacts APM IdP and authenticates. APM IdP creates an assertion and sends the client back to its relying party (ADFS).
-ADFS transforms the claim into a 1.1 token and redirects the client to SharePoint with the new claim.
+1. Client contacts a claims-aware SharePoint site and is redirected to its STS (ADFS or ADFS proxy).
+2. ADFS redirects the client to its STS, the APM IdP.
+3. Client contacts APM IdP and authenticates. APM IdP creates an assertion and sends the client back to its relying party (ADFS).
+4. ADFS transforms the claim into a 1.1 token and redirects the client to SharePoint with the new claim.
+
 So you would essentially create a binding between ADFS and APM IdP, and another between ADFS and SharePoint.
 
-The biggest divergence from your description though is in where the SP service sits. If APM is the SP, then it's going to consume the assertion and terminate the SAML authentication. It isn't going to send that same claim to the SharePoint server. It could, but that would require some custom iRule coding (at a minimum: additional processing to get the SAML 2.0 assertion to ADFS for transformation, and a "double trust" such that the APM IdP signs the assertion with a key that both the SP and ADFS can validate). If you need APM to be an SP, you might want to consider doing Kerberos SSO to SharePoint instead.
+The biggest divergence from your description though is in where the SP service sits. 
+If APM is the SP, then it's going to consume the assertion and terminate the SAML authentication. 
+It isn't going to send that same claim to the SharePoint server. It could, but that would require some custom iRule coding (at a minimum: additional processing to get the SAML 2.0 assertion to ADFS for transformation, and a "double trust" such that the APM IdP signs the assertion with a key that both the SP and ADFS can validate). If you need APM to be an SP, you might want to consider doing Kerberos SSO to SharePoint instead.
 
 
 ### Updated 22-Oct-2013•Originally posted on 22-Oct-2013 by Stig  84
-I need the APM to be the SP as I don't want to let any traffic without a claim through to the Sharepoint or ADFS. If I were to use Kerberos SSO, wouldn't it negate the possibility of "social media logins"? using a Kerberos constrained delegation, I can make the APM request a Kerberos token on behalf of the client and authenticate with the Sharepoint, but that would only work for known domain users, wouldn't it?
+I need the APM to be the SP as I ** do NOT want to let any traffic without a claim through to the Sharepoint or ADFS **. 
+If I were to use Kerberos SSO, wouldn't it negate the possibility of "social media logins"? using a Kerberos constrained delegation, I can make the APM request a Kerberos token on behalf of the client and authenticate with the Sharepoint, but that would only work for known domain users, wouldn't it?
 
 My endgame here is to let the APM present a loginpage when a user goes to the sharepoint-site with the ordinary login and add a link to "social media logon" which sends the user off to f.ex. a Azure ACS which handles all the external stuff. When the user does a standard login, I'll use either kerberos SSO or NTLM directly to the Sharepoint-site. If the user opts for social media, I expect the user to come back with a SAML token where the APM consumes the assertion to verify the claim and sends the client on its merry way towards the sharepoint-site with a new claims it understands. As this needs to be issued by ADFS and I don't want the client to have to input more data, I thought the APM needs to issue a new assertion based on the previous claims.
 
 So, based on your answer it seems I would have to do some iRule coding to issue a new SAML 2.0 assertion based on the received claim, to make this work as I envision it? Do you/anyone have an idea of what this would look like? I'll take a deeper look at iRules (I have only barely played with it so far) to see how this could be done, but any hints would be welcome.
 
+
+## Updated 02-Jan-2014•Originally posted on 02-Jan-2014 by Jon Ole Nome  79
+Ok, I know F5 is working on a APM SAML Sharepoint config guide, check with Per (F5 Norway).
